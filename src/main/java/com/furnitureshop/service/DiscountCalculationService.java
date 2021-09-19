@@ -8,9 +8,8 @@ import com.furnitureshop.model.products.Product;
 /**
  * Service which compares 3 discounts and applies the one which gives most rebate
  */
-public class DiscountCalculationService implements Calculation{
+public class DiscountCalculationService{
 
-    @Override
     public Cart resolveDiscountTypeAndCalculateTotalSum(Cart cart, CustomerType customer) {
         switch (customer) {
             case SPECIAL_AGREEMENT:
@@ -23,7 +22,6 @@ public class DiscountCalculationService implements Calculation{
         }
     }
 
-    @Override
     public Cart calculatePriceWithBestDiscount(Cart cart) {
         Double totalSumWithDiscount = calculateTotalSumWithTotalSumDiscount(cart);
         Double totalSum = calculatePriceWithProductDiscountOrSpecialOffer(cart).getTotalCartSum();
@@ -37,7 +35,6 @@ public class DiscountCalculationService implements Calculation{
         return cart;
     }
 
-    @Override
     public Cart calculatePriceWithProductDiscountOrSpecialOffer(Cart cart) {
         Double productPriceWithProductDiscount = calculateProductDiscount(cart).getTotalCartSum();
         Double productPriceSpecialOffer = calculateSpecialOffer(cart);
@@ -57,7 +54,6 @@ public class DiscountCalculationService implements Calculation{
      * @param cart
      * @return price with PRODUCT_DISCOUNT 15 %
      */
-    @Override
     public Cart calculateProductDiscount(Cart cart) {
         Double sum = 0D;
         for (Product product : cart.getCart()) {
@@ -73,7 +69,6 @@ public class DiscountCalculationService implements Calculation{
      * @param cart
      * @return SPECIAL_OFFER price (buy 3 items pay for 2)
      */
-    @Override
     public Double calculateSpecialOffer(Cart cart) {
         Double sum = 0d;
         for (Product product : cart.getCart()) {
@@ -92,7 +87,6 @@ public class DiscountCalculationService implements Calculation{
      * @param cart
      * @return price with TOTAL_SUM_DISCOUNT 20%
      */
-    @Override
     public Double calculateTotalSumWithTotalSumDiscount(Cart cart) {
         Double sum = 0D;
         for (Product product : cart.getCart()) {
