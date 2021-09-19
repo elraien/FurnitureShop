@@ -14,27 +14,34 @@ public class UI {
     CustomerType customerType;
 
     public UI() {
+    }
+
+    public void startApp() {
+        System.out.println("**************************");
+        System.out.println("Welcome to FurnitureShop!");
+        System.out.println("**************************");
         showMenu();
     }
 
     public void initialScreen() {
-        System.out.println("Please choose customer type: ");
+        System.out.println("Please choose customer type id: ");
         System.out.println("1. NEW CUSTOMER");
         System.out.println("2. SPECIAL AGREEMENT");
         System.out.println("3. VIP");
     }
 
     public void menuScreen() {
+        System.out.println("Choose next action:");
+        System.out.println("0. Exit");
         System.out.println("1. Display Store Products");
         System.out.println("2. Display Cart");
-        System.out.println("0. Exit");
     }
 
     public void cartMenu() {
-        System.out.println("Choose 1) ACTION 2) PRODUCT ID and 3) QUANTITY:");
+        System.out.println("Choose you next action:");
+        System.out.println("0. Exit");
         System.out.println("1. Add to Cart");
         System.out.println("2. Remove From Cart");
-        System.out.println("0. Exit");
     }
 
     public void showMenu() {
@@ -70,12 +77,16 @@ public class UI {
 
     private CustomerType innerChoice1() {
         switch (choice) {
+            case 1:
+                return CustomerType.NEW_CUSTOMER;
             case 2:
                 return CustomerType.SPECIAL_AGREEMENT;
             case 3:
                 return CustomerType.VIP;
             default:
-                return CustomerType.NEW_CUSTOMER;
+                System.out.println("You've entered invalid value. Please choose 1, 2 or 3.");
+                showMenu();
+                return null;
         }
     }
 
@@ -96,20 +107,29 @@ public class UI {
     }
 
     private void addProductToCart(Cart cart, CustomerType customerType) {
+        System.out.println("Choose product id:");
         int id = getUserInput();
+        System.out.println("Choose product quantity:");
         int quantity = getUserInput();
         addProductToCart(cart, id, quantity);
         showCart(cart, customerType);
     }
 
     private void updateCartItemQuantity(Cart cart, CustomerType customerType, boolean increase) {
-        int idForAddingToCart = getUserInput();
-        int quantityForAdding = getUserInput();
-        cart.updateQuantity(cart, idForAddingToCart, increase, quantityForAdding);
-        showCart(cart, customerType);
+        if (cart.getCart().isEmpty()) {
+            System.out.println("Your cart is empty.");
+        } else {
+            System.out.println("Choose product id:");
+            int idForAddingToCart = getUserInput();
+            System.out.println("Choose product quantity:");
+            int quantityForAdding = getUserInput();
+            cart.updateQuantity(cart, idForAddingToCart, increase, quantityForAdding);
+            showCart(cart, customerType);
+        }
     }
 
     private void displayAllProducts() {
+        System.out.println("There are the following products in the shop:");
         List<Product> products = new ProductStock().getProducts();
         for (Product product : products) {
             System.out.println(product.getId() + "- " + product.getName() + " " + product.getPrice());

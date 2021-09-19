@@ -77,12 +77,18 @@ public class Cart {
     }
 
     public List<Product> removeFromCart(Cart cart, int productId) {
-        Product selectedProduct = getProductFromCartById(cart, productId);
-        System.out.println("cart " + cart);
-        List<Product> products = cart.getCart();
-        products.remove(selectedProduct);
-        System.out.println("cart " + cart);
-        return products;
+        if (cart.getCart().isEmpty()) {
+            System.out.println("Your cart is empty.");
+            return null;
+        } else {
+            Product selectedProduct = getProductFromCartById(cart, productId);
+            System.out.println("cart " + cart);
+            List<Product> products = cart.getCart();
+            products.remove(selectedProduct);
+            System.out.println("cart " + cart);
+
+            return products;
+        }
     }
 
     public Cart updateQuantity(Cart cart, int productId, boolean increase, int quantity) {
